@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const bcryptjs = require("bcryptjs");
 
-const { createToken } = require("./auth-helpers");
+const { buildToken } = require("./auth-helpers");
 const Users = require("../users/users-model");
 const {
   requireCredentials,
@@ -32,7 +32,7 @@ router.post("/login", requireCredentials, (req, res, next) => {
   Users.findBy({ username })
     .then(([user]) => {
       if (user && bcryptjs.compareSync(password, user.password)) {
-        const token = createToken(user);
+        const token = buildToken(user);
         res.status(200).json({
           message: `welcome, ${user.username}`,
           token,
