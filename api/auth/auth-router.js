@@ -13,7 +13,6 @@ router.post(
   requireCredentials,
   checkUsernameExists,
   (req, res, next) => {
-    // res.end("implement register, please!");
     const { username, password } = req.body;
     const hash = bcryptjs.hashSync(password, 8);
     Users.add({ username, password: hash })
